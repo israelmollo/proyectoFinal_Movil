@@ -1,9 +1,12 @@
 package com.example.molloisrael_camperodenilson_proyectofinal.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -15,6 +18,7 @@ import com.example.molloisrael_camperodenilson_proyectofinal.Adapter.PoplurarAda
 import com.example.molloisrael_camperodenilson_proyectofinal.Domain.CategoryDomain;
 import com.example.molloisrael_camperodenilson_proyectofinal.Domain.FoodDomain;
 import com.example.molloisrael_camperodenilson_proyectofinal.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -30,6 +34,16 @@ private RecyclerView recyclerViewCategotyList, recyclerViewPopularList;
         setContentView(R.layout.activity_main);
 
         recyclerViewCategoty();
+        recycleViewPopular();
+
+        ConstraintLayout startBtn = findViewById(R.id.btncarrito);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CartListActivity.class));
+            }
+        });
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -38,17 +52,26 @@ private RecyclerView recyclerViewCategotyList, recyclerViewPopularList;
         });
     }
 
+    private void bottomNavigation(){
+        FloatingActionButton floatingActionButton= findViewById(R.id.cardBtn);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CartListActivity.class)) ;
+            }
+        });
+    }
+
     private void recyclerViewCategoty() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCategotyList=findViewById(R.id.view1);
         recyclerViewCategotyList.setLayoutManager(linearLayoutManager);
-
         ArrayList<CategoryDomain> categoryList=new ArrayList<>();
-        categoryList.add(new CategoryDomain("Carnes", "cat_1"));
-        categoryList.add(new CategoryDomain("Lacteos", "cat_2"));
-        categoryList.add(new CategoryDomain("Frutas", "cat_3"));
-        categoryList.add(new CategoryDomain("Verduras", "cat_4"));
-        categoryList.add(new CategoryDomain("Cereales", "cat_5"));
+        categoryList.add(new CategoryDomain("Carnes", "catcarne"));
+        categoryList.add(new CategoryDomain("Lacteos", "catlacteo"));
+        categoryList.add(new CategoryDomain("Frutas", "catfrutas"));
+        categoryList.add(new CategoryDomain("Verduras", "catverduras"));
+        categoryList.add(new CategoryDomain("Cereales", "catcereal"));
 
 
         adapter=new CategoryAdaptor(categoryList);
@@ -56,14 +79,14 @@ private RecyclerView recyclerViewCategotyList, recyclerViewPopularList;
     }
 
     private void recycleViewPopular(){
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
         recyclerViewPopularList = findViewById(R.id.recycleView2);
+        recyclerViewPopularList.setLayoutManager(linearLayoutManager);
 
         ArrayList<FoodDomain> foodList = new ArrayList<>();
-
-        foodList.add(new FoodDomain("Sandia", "pizza1", "¡Descubre la dulzura y la frescura de nuestras sandías! ", 39.99));
-        foodList.add(new FoodDomain("Cereal de Quinoa", "burger","¡Eleva tus desayunos y meriendas con nuestro cereal de quinoa! Nutrición, sabor y bienestar en cada cucharada.", 9.99));
-        foodList.add(new FoodDomain("Carne de Cerdo", "pizza2", "¡Agrega sabor y variedad a tus comidas con nuestra carne de cerdo de calidad premium! (X KILO)", 50.99));
+        foodList.add(new FoodDomain("Sandia Cruceña", "sandia", "¡Descubre la dulzura y la frescura de nuestras sandías! (GRANDE) ", 30.99));
+        foodList.add(new FoodDomain("Cereal de Quinoa", "cereal_quinoa","¡Eleva tus desayunos y meriendas con nuestro cereal de quinoa! Nutrición, sabor y bienestar en cada cucharada.", 9.99));
+        foodList.add(new FoodDomain("Carne de Cerdo", "carne_cerdo", "¡Agrega sabor y variedad a tus comidas con nuestra carne de cerdo de calidad premium! (X KILO)", 50.99));
 
         adapter2 = new PoplurarAdaptor(foodList);
         recyclerViewPopularList.setAdapter(adapter2);

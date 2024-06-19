@@ -1,5 +1,7 @@
 package com.example.molloisrael_camperodenilson_proyectofinal.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.molloisrael_camperodenilson_proyectofinal.Activity.prueba;
 import com.example.molloisrael_camperodenilson_proyectofinal.Domain.CategoryDomain;
 import com.example.molloisrael_camperodenilson_proyectofinal.R;
 
@@ -36,38 +40,48 @@ public class CategoryAdaptor extends RecyclerView.Adapter<CategoryAdaptor.ViewHo
         String picUrl = "";
         switch (position) {
             case 0:
-                 // Asegúrate de que holder.imageView apunte al ImageView correcto
-                holder.categoryPic.setImageResource(R.drawable.catcarne);
-                picUrl = "cat_1";
+                holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Obtener el contexto desde la vista
+                        Context context = v.getContext();
+
+                        // Iniciar la actividad "prueba"
+                        Intent intent = new Intent(context, prueba.class);
+                        context.startActivity(intent);
+                    }
+                });
+                picUrl = "catcarne";
                 holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.background_category1));
                 break;
             case 1:
-                holder.categoryPic.setImageResource(R.drawable.catlacteo);
-                picUrl = "cat_2";
+                picUrl = "catlacteo";
                 holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.background_category2));
                 break;
             case 2:
-                holder.categoryPic.setImageResource(R.drawable.catfrutas);
-                picUrl = "cat_3";
+                picUrl = "catfrutas";
                 holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.background_category3));
                 break;
             case 3:
-                holder.categoryPic.setImageResource(R.drawable.catverduras);
+                picUrl = "catverduras";
                 holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.background_category4));
                 break;
             case 4:
-                holder.categoryPic.setImageResource(R.drawable.catcereal);
-                picUrl = "cat_5";
+                picUrl = "catcereal";
                 holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.background_category5));
                 break;
             default:
                 break;
         }
+
+        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picUrl, "drawable", holder.itemView.getContext().getPackageName());
+        Glide.with(holder.itemView.getContext())
+                .load(drawableResourceId)
+                .into(holder.categoryPic);
     }
     @Override
     public int getItemCount() {
         return categoryDomains.size();
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

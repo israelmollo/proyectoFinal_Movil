@@ -17,6 +17,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
 }
 
 rootProject.name = "MolloIsrael_CamperoDenilson_ProyectoFinal"
